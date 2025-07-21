@@ -1,29 +1,31 @@
 import {test, expect, request} from "@playwright/test";
 
 
+test.describe('youtube.com api testing', async () => {
+    test('youtube.com api get comment under a given video ', async () => {
+        const baseURL = 'https://www.googleapis.com/youtube/v3'
+        const VIDEO_ID = 'XEZYadc2o-8';
+        const context = await request.newContext();
+        const response = await context.get(`${baseURL}/commentThreads`, {
+            params: {
+                part: 'snippet',
+                videoId: VIDEO_ID,
+                key: process.env.API_TOKEN,
+                maxResults: 5,
+            }
+        });
 
-test('api get request', async () => {
-    const baseURL = 'https://www.googleapis.com/youtube/v3'
-    const VIDEO_ID = 'XEZYadc2o-8';
-    const context = await request.newContext();
-    const response = await context.get(`${baseURL}/commentThreads`, {
-        params: {
-            part: 'snippet',
-            videoId: VIDEO_ID,
-            key: process.env.API_TOKEN,
-            maxResults: 5,
+        expect(response.ok()).toBeTruthy();
+        const data = await response.json();
+        for (const item of data.items) {
+            const comment = item.snippet.topLevelComment.snippet.textDisplay;
+            console.log(comment + '\n');
         }
-    });
-
-    expect(response.ok()).toBeTruthy();
-    const data = await response.json();
-    for (const item of data.items) {
-        const comment = item.snippet.topLevelComment.snippet.textDisplay;
-        console.log(comment + '\n');
-    }
+    })
 })
 
 test.describe('automationexercise.com api testing', async () => {
+
     const baseURL = 'https://automationexercise.com/api';
 
     test('Get all product list API 1',  async ({request}) => {
@@ -74,66 +76,11 @@ test.describe('automationexercise.com api testing', async () => {
         expect(jsonResponse.responseCode).toBe(405);
     })
 
-
-    //TODO: Bad request, search_product parameter is missing in POST request
-    test('Post to search product API 5',  async ({request}) => {
-        const response = await request.post(`${baseURL}/searchProduct`,{
-            search_product: 'top',
-            data: {
-                search_product: 'top',
-            },
-            params: {
-                search_product: 'top',
-            },
-            headers:{
-                'accept': 'application/json',
-                'content-type': 'application/json',
-            }
-        });
-
-        console.log(await response.text());
-
-    })
-
-    //TODO: Doesn't work as website is broken
-    test('Post to create/register user API 11',  async ({request}) => {
-        const response = await request.post(`${baseURL}/createAccount`, {
-            params: {
-                name: 'john_doe',
-                email: 'john_doe@example.com',
-                password: 'securePassword123',
-                title: 'Mr',
-                birth_date: '15',
-                birth_month: '05',
-                birth_year: '1990',
-                firstname: 'John',
-                lastname: 'Doe',
-                company: 'TestCorp',
-                address1: '123 Main Street',
-                address2: 'Apt 4B',
-                country: 'Canada',
-                zipcode: 'M4B1B3',
-                state: 'Ontario',
-                city: 'Toronto',
-                mobile_number: '+11234567890',
-            },
-            headers: {
-
-                'content-type': 'application/json',
-            }
-        })
-        console.log(await response.text());
-    })
 })
 
 test.describe('fakestoreapi.com api testing', async () => {
     const baseURL = 'https://fakestoreapi.com';
-    const user = {
-        id: 0,
-        username: 'john_doe',
-        email: 'john_doe@example.com',
-        password: '12345678',
-    }
+
     test('Create a new user',  async ({request}) => {
         const response = await request.post(`${baseURL}/users`, {
             headers: {
@@ -187,5 +134,92 @@ test.describe('fakestoreapi.com api testing', async () => {
         const response = await request.delete(`${baseURL}/users/${id}`);
         expect(response.status()).toBe(200);
     })
+
+})
+
+test.describe('dummyjson.com api testing', async () => {
+    const baseURL = 'https://dummyjson.com';
+
+    test('Get all users', async ({request}) => {
+        const response = await request.get(`${baseURL}/users`);
+        expect(response.status()).toBe(200);
+        console.log(await response.json());
+    });
+
+    test('Create a user', async ({request}) => {
+        const response = await request.post(`${baseURL}/users/add`,{
+            data: {
+                firstName: 'John',
+                lastName: 'Doe',
+                age: 100,
+                gender: 'male',
+            },
+            headers: {
+                'content-type': 'application/json',
+            }
+        });
+        expect(response.status()).toBe(201);
+        expect(await response.json()).toHaveProperty('firstName', 'John');
+        console.log(await response.json());
+    });
+
+    test('Update a user', async ({request}) => {
+        const id = 20
+        const response = await request.patch(`${baseURL}/users/${id}`, {
+            data: {
+                firstName: 'johnUPDATED',
+                lastName: 'DoeUPDATED',
+                gender: 'female',
+                age: 1209039,
+            }
+        });
+        expect(response.status()).toBe(200);
+        expect(await response.json()).toHaveProperty('firstName', 'johnUPDATED');
+        console.log(await response.json());
+    });
+
+    test('Login a user', async ({request}) => {
+        const response = await request.post(`${baseURL}/user/login`, {
+            data: {
+                username: 'oliviaw',
+                password: 'oliviawpass',
+                expiresInMins: 5,
+            },
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            }
+        });
+        expect(response.status()).toBe(200);
+        console.log(await response.json());
+    })
+
+    test('Login a user and get its data', async ({request}) => {
+        const response = await request.post(`${baseURL}/user/login`, {
+            data: {
+                username: 'oliviaw',
+                password: 'oliviawpass',
+                expiresInMins: 5,
+            },
+            headers: {
+                'content-type': 'application/json',
+                'accept': 'application/json',
+            }
+        });
+        expect(response.status()).toBe(200);
+        const token = await response.json();
+
+        const getResponse = await request.get(`${baseURL}/user/me`, {
+            headers: {
+                'Authorization': `Bearer ${token.accessToken}`
+            },
+            credentials: 'include',
+        });
+
+        expect(getResponse.status()).toBe(200);
+        expect(await response.json()).toHaveProperty('username', 'oliviaw');
+        console.log(await getResponse.json());
+    })
+
 
 })
