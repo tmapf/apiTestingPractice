@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f62d2d51-d106-4d86-aa81-6496eeb05bec" name="Changes" comment="start &amp; config">
+    <list default="true" id="f62d2d51-d106-4d86-aa81-6496eeb05bec" name="Changes" comment="youtube comment get request">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/playwright.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/playwright.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/api.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/tests/api.test.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,6 +42,9 @@
   "associatedIndex": 1
 }]]></component>
   <component name="ProjectId" id="302qbd9CfvOeH0hUm1PMCclCQFm" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -81,7 +88,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1752836087999</updated>
-      <workItem from="1752836089035" duration="7467000" />
+      <workItem from="1752836089035" duration="16151000" />
     </task>
     <task id="LOCAL-00001" summary="start &amp; config">
       <option name="closed" value="true" />
@@ -91,7 +98,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752841413384</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="youtube comment get request">
+      <option name="closed" value="true" />
+      <created>1752846230849</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1752846230849</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -102,6 +117,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="start &amp; config" />
-    <option name="LAST_COMMIT_MESSAGE" value="start &amp; config" />
+    <MESSAGE value="youtube comment get request" />
+    <option name="LAST_COMMIT_MESSAGE" value="youtube comment get request" />
   </component>
 </project>
